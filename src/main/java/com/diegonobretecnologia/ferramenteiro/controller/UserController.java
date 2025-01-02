@@ -1,9 +1,12 @@
 package com.diegonobretecnologia.ferramenteiro.controller;
 
+import com.diegonobretecnologia.ferramenteiro.config.JwtFilter;
 import com.diegonobretecnologia.ferramenteiro.dto.UserDTO;
 import com.diegonobretecnologia.ferramenteiro.model.UserModel;
 import com.diegonobretecnologia.ferramenteiro.service.UserService;
 import org.apache.catalina.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
     @Autowired
@@ -23,7 +26,11 @@ public class UserController {
 
     @GetMapping
     public List<UserDTO> getAllUsers() {
-        return userService.getAllUsers();
+        logger.info("UsersController: Recebida requisição para /users");
+
+        List<UserDTO> allUsers = userService.getAllUsers();
+        logger.info("UsersController: Retornando {} usuários", allUsers.size());
+        return allUsers;
     }
 
     @GetMapping("/{id}")

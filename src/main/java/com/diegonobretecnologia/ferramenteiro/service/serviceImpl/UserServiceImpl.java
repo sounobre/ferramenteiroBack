@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getAllUsers() {
-        // Converte a lista de entidades User para uma lista de UserDTO
         return userRepository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -31,7 +30,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserDTO> getUserById(Long id) {
-        // Converte a entidade User em um Optional<UserDTO>
         return userRepository.findById(id)
                 .map(this::convertToDTO);
     }
@@ -58,12 +56,10 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    // Método para converter User para UserDTO
     private UserDTO convertToDTO(UserModel user) {
         return new UserDTO(user.getId(), user.getName(), user.getEmail());
     }
 
-    // Método para converter UserDTO para User
     private UserModel convertToEntity(UserDTO userDTO) {
         return new UserModel(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
     }
